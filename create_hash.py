@@ -2,6 +2,7 @@ import sys
 import os
 import hashlib
 from pathlib import Path
+import zipfile
 
 def strip_first_directory(path):
     """Strip the first directory from the path."""
@@ -47,13 +48,25 @@ def process_directory(root_directory, output_file):
                 no_first_dir = strip_first_directory(filepath)
                 out.write(f"{no_first_dir}|{hash_value}\n")
 
+def zip_char_img():
+    zip_file_name = './repos/char.zip'
+    folder_path = './repos/char'
+    with zipfile.ZipFile(zip_file_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                # Create a proper path for each file to be stored in the zip
+                file_path = os.path.join(root, file)
+                # Adding file to zip
+                zipf.write(file_path, os.path.relpath(file_path, os.path.dirname(folder_path)))
+
 def main():
     directory_path = sys.argv[1]
     process_directory(directory_path, "hashList.txt")
+    zip_char_img()
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("use: python create_hash.py <folder to create hash of")
+        print("use: python create_hash.py <folder to create hash of>")
         sys.exit(1)
     main()
