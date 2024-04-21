@@ -1,4 +1,4 @@
-Combat Level:|戦闘レベルaa
+Combat Level:|戦闘レベル
 Total Level:|合計レベル
 Total XP:|合計Xp:
 Quests Completed:|達成した　クエスト
